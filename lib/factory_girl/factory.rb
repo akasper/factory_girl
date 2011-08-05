@@ -39,19 +39,24 @@ module FactoryGirl
       @attributes = []
     end
 
-    def inherit_from(parent) #:nodoc:
-      @options[:class]            ||= parent.class_name
-      @options[:default_strategy] ||= parent.default_strategy
+    def inherit_from(parents) #:nodoc:
+      parents = [parents].flatten
 
-      new_attributes = []
-      parent.attributes.each do |attribute|
-        unless attribute_defined?(attribute.name)
-          new_attributes << attribute.clone
+      parents.each do |parent|
+        @options[:class]            ||= parent.class_name
+        @options[:default_strategy] ||= parent.default_strategy
+
+        new_attributes = []
+
+        parent.attributes.each do |attribute|
+          unless attribute_defined?(attribute.name)
+            new_attributes << attribute.clone
+          end
         end
-      end
 
-      @attributes += new_attributes
-      @attributes.sort!
+        @attributes += new_attributes
+        @attributes.sort!
+      end
     end
 
     def define_attribute(attribute)
@@ -153,7 +158,7 @@ module FactoryGirl
     end
 
     def assert_valid_options(options)
-      invalid_keys = options.keys - [:class, :parent, :default_strategy, :aliases]
+      invalid_keys = options.keys - [:class, :parent, :parents, :default_strategy, :aliases]
       unless invalid_keys == []
         raise ArgumentError, "Unknown arguments: #{invalid_keys.inspect}"
       end

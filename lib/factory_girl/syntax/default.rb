@@ -16,13 +16,20 @@ module FactoryGirl
           factory = Factory.new(name, options)
           proxy = FactoryGirl::DefinitionProxy.new(factory)
           proxy.instance_eval(&block) if block_given?
-          if parent = options.delete(:parent)
-            factory.inherit_from(FactoryGirl.factory_by_name(parent))
+
+          parents = [options.delete(:parent), options.delete(:parents)].flatten.compact
+
+          if parents.any?
+            factory.inherit_from(parents.map {|parent| FactoryGirl.factory_by_name(parent) })
           end
+
           FactoryGirl.register_factory(factory)
 
           proxy.child_factories.each do |(child_name, child_options, child_block)|
-            factory(child_name, child_options.merge(:parent => name), &child_block)
+            child_factory_parents = [child_options[:parent], child_options[:parents]].flatten.compact.reverse
+            child_factory_parents << name
+
+            factory(child_name, child_options.merge(:parents => child_factory_parents), &child_block)
           end
         end
 
