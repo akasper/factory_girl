@@ -10,6 +10,10 @@ module FactoryGirl
       def add_to(proxy)
         proxy.set(name, FactoryGirl.generate(@sequence))
       end
+      
+      def mutate
+        FactoryGirl.generate(@sequence)
+      end
     end
 
   end

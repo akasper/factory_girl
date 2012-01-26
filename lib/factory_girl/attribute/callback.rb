@@ -10,6 +10,10 @@ module FactoryGirl
       def add_to(proxy)
         proxy.add_callback(name, @block)
       end
+      
+      def mutate
+        raise AttributeMutationException.new("Cannot mutate a Callback attribute.")
+      end
     end
 
   end

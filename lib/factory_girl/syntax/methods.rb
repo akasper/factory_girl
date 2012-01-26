@@ -117,6 +117,18 @@ module FactoryGirl
       def generate(name)
         FactoryGirl.sequence_by_name(name).next
       end
+
+      def mock(name, overrides = {})
+        FactoryGirl.factory_by_name(name).run(Proxy::Mock, overrides)
+      end
+
+      def hash(name, overrides={})
+        FactoryGirl.factory_by_name(name).run(Proxy::Hash, overrides)
+      end
+
+      def json(name, overrides={})
+        FactoryGirl.factory_by_name(name).run(Proxy::JSON, overrides)
+      end
     end
   end
 end

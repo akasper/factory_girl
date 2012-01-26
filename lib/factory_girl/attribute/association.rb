@@ -18,6 +18,10 @@ module FactoryGirl
       def association?
         true
       end
+      
+      def mutate
+        @factory.run(Proxy::Hash, overrides)
+      end
     end
 
   end

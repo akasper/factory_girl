@@ -131,7 +131,19 @@ module FactoryGirl
         def self.stub(name, overrides = {})
           FactoryGirl.build_stubbed(name, overrides)
         end
-      end
+        
+        def self.mock(name, overrides = {})
+          FactoryGirl.mock(name, overrides)
+        end
+
+        def self.hash(name, overrides={})
+          FactoryGirl.hash(name, overrides)
+        end
+
+        def self.json(name, overrides={})
+          FactoryGirl.json(name, overrides)
+        end
+     end
 
       # Shortcut for Factory.default_strategy.
       #

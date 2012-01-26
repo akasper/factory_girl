@@ -18,6 +18,10 @@ module FactoryGirl
         name
       end
 
+      def mutate
+        raise AttributeMutationException.new("Cannot mutate an Implicit attribute.")
+      end
+      
       private
 
       def implementation

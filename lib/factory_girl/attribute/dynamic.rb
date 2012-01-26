@@ -14,6 +14,11 @@ module FactoryGirl
         end
         proxy.set(name, value)
       end
+      
+      def mutate
+        @block.call
+        # @block.arity == 1 ? @block.call(proxy) : proxy.instance_exec(&@block)
+      end
     end
 
   end

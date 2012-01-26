@@ -15,6 +15,11 @@ module FactoryGirl
       def priority
         0
       end
+      
+      def mutate
+        raise AttributeMutationException.new("Cannot mutate a Static attribute.")
+      end
+
     end
   end
 end

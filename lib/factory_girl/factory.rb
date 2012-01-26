@@ -74,7 +74,7 @@ module FactoryGirl
     end
 
     def run(proxy_class, overrides) #:nodoc:
-      proxy = proxy_class.new(build_class)
+      proxy = proxy_class.by_name(class_name, self)
       overrides = symbolize_keys(overrides)
       overrides.each {|attr, val| proxy.set(attr, val) }
       passed_keys = overrides.keys.collect {|k| FactoryGirl.aliases_for(k) }.flatten

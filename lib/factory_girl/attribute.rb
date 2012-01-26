@@ -7,6 +7,9 @@ module FactoryGirl
   class AttributeDefinitionError < RuntimeError
   end
 
+  class AttributeMutationException < Exception
+  end
+  
   class Attribute #:nodoc:
     include Comparable
 
